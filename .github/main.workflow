@@ -12,3 +12,18 @@ action "new-action" {
   uses = "owner/repo/path@ref"
   needs = ["filter branch master"]
 }
+
+workflow "hook user comment" {
+  on = "issue_comment"
+  resolves = ["new-action-1"]
+}
+
+action "start with r?" {
+  uses = "actions/bin/filter@d820d56839906464fb7a57d1b4e1741cf5183efa"
+  args = "issue_comment r\\? +@.*"
+}
+
+action "new-action-1" {
+  uses = "owner/repo/path@ref"
+  needs = ["start with r?"]
+}
