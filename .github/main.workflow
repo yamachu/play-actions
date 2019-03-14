@@ -15,5 +15,5 @@ workflow "hook user comment" {
 
 action "start with r?" {
   uses = "actions/bin/filter@d820d56839906464fb7a57d1b4e1741cf5183efa"
-  args = ["issue_comment", "r\\? +@.*"]
+  args = ["issue_comment", "'r\? +@.*'"]
 }
