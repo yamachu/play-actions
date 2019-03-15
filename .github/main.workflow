@@ -1,6 +1,6 @@
 workflow "on push to master" {
   on = "push"
-  resolves = ["cat event"]
+  resolves = ["filter head"]
 }
 
 action "filter branch master" {
@@ -22,4 +22,10 @@ action "cat event" {
   uses = "actions/bin/sh@master"
   needs = ["filter branch master"]
   args = ["cat $GITHUB_EVENT_PATH"]
+}
+
+action "filter head" {
+  uses = "actions/bin/filter@master"
+  needs = ["cat event"]
+  args = "ref refs/heads/master"
 }
