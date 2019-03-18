@@ -27,5 +27,9 @@ action "cat event" {
 action "filter head" {
   uses = "actions/bin/filter@master"
   needs = ["cat event"]
-  args = "ref refs/heads/master"
+  runs = "/github/workspace/.github/custom-filter.sh"
+  args = "refs/heads/master"
+  env = {
+    CUSTOM_JQ_FILTER = ".ref"
+  }
 }
