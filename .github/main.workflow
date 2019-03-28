@@ -1,6 +1,6 @@
 workflow "on push to master" {
   on = "push"
-  resolves = ["filter head"]
+  resolves = ["filter not deleted event"]
 }
 
 action "filter branch master" {
@@ -24,12 +24,12 @@ action "cat event" {
   args = ["cat $GITHUB_EVENT_PATH"]
 }
 
-action "filter head" {
+action "filter not deleted event" {
   uses = "actions/bin/filter@master"
   needs = ["cat event"]
   runs = "/github/workspace/.github/custom-filter.sh"
-  args = "refs/heads/master"
+  args = "false"
   env = {
-    CUSTOM_JQ_FILTER = ".ref"
+    CUSTOM_JQ_FILTER = ".deleted"
   }
 }
