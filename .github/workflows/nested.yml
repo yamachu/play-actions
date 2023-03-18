@@ -1,0 +1,22 @@
+name: Nested
+
+on:
+  workflow_dispatch:
+
+jobs:
+  base:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo hello
+
+  foo:
+    runs-on: ubuntu-latest
+    needs: base
+    steps:
+      - run: echo hi
+
+  bar:
+    runs-on: ubuntu-latest
+    needs: [base, foo]
+    steps:
+      - run: echo "こんにちは"
