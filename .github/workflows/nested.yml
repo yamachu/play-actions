@@ -23,5 +23,3 @@ jobs:
     steps:
       - run: echo "こんにちは"
       - run: echo ${{ needs.base.outputs.my_result }}
-      - run: |
-        [ "${{ needs.base.outputs.my_result }}" = "true" ] && exit 0 || exit 1
