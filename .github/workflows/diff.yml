@@ -19,6 +19,7 @@ jobs:
       issues: write
       actions: write
     steps:
+    - run: cat ${{ github.event.comment.body}}
     - uses: actions/checkout@v3
     - run: make diff-screenshot PR=${{ github.event.issue.number }}> ./my-diff
     - uses: actions/upload-artifact@v3
