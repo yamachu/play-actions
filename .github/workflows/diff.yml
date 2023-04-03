@@ -31,7 +31,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         URL: ${{ github.event.issue.html_url }}
       run: |
-        RUN_ID=gh run list --limit 1 --workflow=Diff --json databaseId|jq -r '.[0].databaseId'
+        RUN_ID=$(gh run list --limit 1 --workflow=Diff --json databaseId|jq -r '.[0].databaseId')
         echo https://github.com/yamachu/play-actions/actions/runs/${RUN_ID} のArtifactsのDiffを確認してね > ./artifacts
 
         gh pr comment -F ./artifacts "${URL}"
