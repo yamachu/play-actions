@@ -22,8 +22,6 @@ jobs:
     - run: cat $GITHUB_EVENT_PATH
     # see: https://dev.classmethod.jp/articles/github-actions-get-diff-files-on-pr-events/
     - uses: actions/checkout@v3
-      with:
-        ref: ${{ github.event.pull_request.head.sha }}
     - name: fetch master
       run: git fetch origin master:master
     - run: make diff-screenshot > ./my-diff
