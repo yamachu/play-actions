@@ -1,3 +1,3 @@
 # play-actions
 
-GitHub Actionsで遊ぼう
+GitHub Actionsで遊ぼう!
