@@ -34,6 +34,6 @@ jobs:
         gh api \
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
-          /repos/yamachu/play-actions/actions/artifacts | \
-        jq '.artifacts[] | select(.workflow_run.head_sha == "${{ github.sha }}") | .archive_download_url' > ./artifacts
+          /repos/yamachu/play-actions/actions/runs/$(gh run list --limit 1 --workflow=Diff --json databaseId|jq -r '.[0].databaseId')/artifacts | \
+        jq '.artifacts[] | .archive_download_url' > ./artifacts
         gh pr comment -F ./artifacts "${URL}"
