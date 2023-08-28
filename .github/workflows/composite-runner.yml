@@ -1,0 +1,19 @@
+name: CompositeRunner
+on:
+  workflow_dispatch:
+
+jobs:
+  ScriptWorker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/composite/custom-cache
+        with:
+          cache-key: hoge
+          cache-path: ./hoge
+          cache-miss-action: ./.github/composite/sample
+      - uses: ./.github/composite/custom-cache
+        with:
+          cache-key: hoge
+          cache-path: ./hoge
+          cache-miss-run: echo "cache miss"

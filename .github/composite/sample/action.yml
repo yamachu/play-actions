@@ -1,0 +1,12 @@
+name: Sample composite action
+description: sample
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: echo "Hello, world!"
+    - shell: bash
+      run: pwd
+    - shell: bash
+      run: ls -al ./*

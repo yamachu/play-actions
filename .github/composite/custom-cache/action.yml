@@ -1,0 +1,35 @@
+name: My Custom Cache
+description: custom cache
+
+inputs:
+  cache-key:
+    description: cache key
+    required: true
+  cache-path:
+    description: cache path
+    required: true
+  cache-miss-action:
+    description: cache miss action
+    required: false
+  cache-miss-run:
+    description: cache miss run task
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/cache/restore@v3
+      id: composite-cache-restore
+      with:
+        path: ${{ inputs.cache-path }}
+        key: ${{ inputs.cache-key }}
+    - if: ${{ steps.composite-cache-restore.outputs.cache-hit != 'true' and inputs.cache-miss-action != '' }}
+      uses: ${{ inputs.cache-miss-action }}
+    - if: ${{ steps.composite-cache-restore.outputs.cache-hit != 'true' and inputs.cache-miss-run != '' }}
+      shell: bash
+      run: ${{ inputs.cache-miss-run }}
+    - if: ${{ steps.composite-cache-restore.outputs.cache-hit != 'true' }}
+      uses: actions/cache/save@v3
+      with:
+        path: ${{ inputs.cache-path }}
+        key: ${{ inputs.cache-key }}
