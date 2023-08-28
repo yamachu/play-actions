@@ -23,9 +23,9 @@ runs:
       with:
         path: ${{ inputs.cache-path }}
         key: ${{ inputs.cache-key }}
-    - if: ${{ steps.composite-cache-restore.outputs.cache-hit != 'true' and inputs.cache-miss-action != '' }}
+    - if: ${{ steps.composite-cache-restore.outputs.cache-hit != 'true' && inputs.cache-miss-action != '' }}
       uses: ${{ inputs.cache-miss-action }}
-    - if: ${{ steps.composite-cache-restore.outputs.cache-hit != 'true' and inputs.cache-miss-run != '' }}
+    - if: ${{ steps.composite-cache-restore.outputs.cache-hit != 'true' && inputs.cache-miss-run != '' }}
       shell: bash
       run: ${{ inputs.cache-miss-run }}
     - if: ${{ steps.composite-cache-restore.outputs.cache-hit != 'true' }}
