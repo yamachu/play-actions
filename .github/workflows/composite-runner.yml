@@ -11,7 +11,7 @@ jobs:
         with:
           cache-key: hoge
           cache-path: ./hoge
-          cache-miss-action: ./.github/composite/sample
+          cache-miss-action: yamachu/play-actions/.github/composite/sample
       - uses: ./.github/composite/custom-cache
         with:
           cache-key: hoge
