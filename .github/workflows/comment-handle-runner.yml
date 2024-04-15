@@ -1,0 +1,25 @@
+name: Comment Handle Runner
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  CommentHandle:
+    if: (contains(github.event.comment.body, '/queue-merge') && github.event.issue.pull_request != null)
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Comment Handle Runner"
+
+  RunJobs:
+    runs-on: ubuntu-latest
+    needs: [CommentHandle]
+    concurrency:
+      group: queue-merge
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const script = require('${{ github.workspace }}/.github/scripts/wait.js')
+            await script()
