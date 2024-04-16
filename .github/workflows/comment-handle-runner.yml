@@ -9,6 +9,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Comment Handle Runner"
+      - run: echo "${{ github.ref }}"
+      - run: echo "${{ github.sha }}"
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo, number } = context.issue;
+            const { data } = await github.rest.pulls.get({
+              owner,
+              repo,
+              pull_number: number
+            });
+            console.log(data.merge_commit_sha);
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo, number } = context.issue;
+            const { data } = await github.rest.pulls.get({
+              owner,
+              repo,
+              pull_number: number
+            });
+            if (data.mergeable === false) {
+              throw new Error('The pull request is not mergeable due to conflicts.');
+            } else {
+              console.log('The pull request is mergeable.');
+            }
 
   RunJobs:
     runs-on: ubuntu-latest
@@ -18,6 +44,32 @@ jobs:
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
+      - run: echo "${{ github.ref }}"
+      - run: echo "${{ github.sha }}"
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo, number } = context.issue;
+            const { data } = await github.rest.pulls.get({
+              owner,
+              repo,
+              pull_number: number
+            });
+            console.log(data.merge_commit_sha);
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo, number } = context.issue;
+            const { data } = await github.rest.pulls.get({
+              owner,
+              repo,
+              pull_number: number
+            });
+            if (data.mergeable === false) {
+              throw new Error('The pull request is not mergeable due to conflicts.');
+            } else {
+              console.log('The pull request is mergeable.');
+            }
       - uses: actions/github-script@v7
         with:
           script: |
