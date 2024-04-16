@@ -104,3 +104,38 @@ jobs:
           script: |
             const script = require('${{ github.workspace }}/.github/scripts/wait.js')
             await script({ context })
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo, number } = context.issue;
+            const { data } = await github.rest.pulls.get({
+              owner,
+              repo,
+              pull_number: number
+            });
+            console.log(data.merge_commit_sha);
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo, number } = context.issue;
+            const { data } = await github.rest.pulls.get({
+              owner,
+              repo,
+              pull_number: number
+            });
+            if (data.mergeable === false) {
+              throw new Error('The pull request is not mergeable due to conflicts.');
+            } else {
+              console.log('The pull request is mergeable.');
+            }
+      - uses: actions/github-script@v7
+        name: master
+        with:
+          script: |
+            const { owner, repo, number } = context.issue;
+            const { data } = await github.rest.repos.getBranch({
+              owner,
+              repo,
+              branch: 'master'
+            });
+            console.log(data.commit.sha);
