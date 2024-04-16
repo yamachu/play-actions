@@ -44,7 +44,7 @@ jobs:
         with:
           script: |
             const { owner, repo, number } = context.issue;
-            const { data } = await github.rest.branches.get({
+            const { data } = await github.rest.repos.getBranch({
               owner,
               repo,
               branch: 'master'
@@ -93,7 +93,7 @@ jobs:
         with:
           script: |
             const { owner, repo, number } = context.issue;
-            const { data } = await github.rest.branches.get({
+            const { data } = await github.rest.repos.getBranch({
               owner,
               repo,
               branch: 'master'
