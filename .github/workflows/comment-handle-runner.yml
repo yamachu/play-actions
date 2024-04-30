@@ -80,9 +80,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           # delete auto branch
+          git pull origin ${{ steps.get_base_branch.outputs.result }};
           gh pr checkout ${{ github.event.issue.number }} && \
-          git fetch origin ${{ steps.get_base_branch.outputs.result }} && \
-          git merge FETCH_HEAD && git show HEAD
+          git merge ${{ steps.get_base_branch.outputs.result }} && git show HEAD
       - run: git show HEAD
       - run: echo "${{ github.ref }}"
       - run: echo "${{ github.sha }}"
