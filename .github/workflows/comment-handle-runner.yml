@@ -76,7 +76,9 @@ jobs:
             });
             console.log(`Base branch: ${data.base.ref}`);
             return data.base.ref;
-      - run: |
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
           # delete auto branch
           gh pr checkout ${{ github.event.issue.number }} && \
           git fetch origin ${{ steps.get_base_branch.outputs.result }} && \
