@@ -12,7 +12,7 @@ jobs:
         with:
           script: |
             const { owner, repo, number } = context.issue;
-            const commentBody = github.event.comment.body;
+            const commentBody = context.payload.comment.body;
             const mentionRegex = /\/r\? ((@\w+ ?)+)/;
             const match = commentBody.match(mentionRegex);
             if (!match) {
