@@ -94,7 +94,7 @@ jobs:
           gh pr checkout ${{ github.event.issue.number }}
           git merge ${{ steps.get_base_branch.outputs.result }}
 
-          git push origin HEAD auto.tmp
+          git push origin HEAD:auto.tmp
       - run: git show HEAD
       - run: echo "${{ github.ref }}"
       - run: echo "${{ github.sha }}"
