@@ -79,6 +79,8 @@ jobs:
       - env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com";
+          git config --global user.name "github-actions[bot]";
           # delete auto branch
           git pull origin ${{ steps.get_base_branch.outputs.result }};
           gh pr checkout ${{ github.event.issue.number }} && \
