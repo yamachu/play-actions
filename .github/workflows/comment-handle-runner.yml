@@ -78,7 +78,7 @@ jobs:
             });
             console.log(`Base branch: ${data.base.ref}`);
             return data.base.ref;
-      - run: git fetch ${{ steps.get_base_branch.outputs.result }} && git merge FETCH_HEAD
+      - run: git fetch origin ${{ steps.get_base_branch.outputs.result }} && git merge FETCH_HEAD
       - run: git show HEAD
       - run: echo "${{ github.ref }}"
       - run: echo "${{ github.sha }}"
