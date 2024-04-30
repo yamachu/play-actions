@@ -141,6 +141,6 @@ jobs:
         run: |
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-          gh pr merge ${{ github.event.issue.number }}
+          gh pr merge ${{ github.event.issue.number }} -m
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
