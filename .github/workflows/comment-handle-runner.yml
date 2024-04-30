@@ -82,7 +82,7 @@ jobs:
           # delete auto branch
           git pull origin ${{ steps.get_base_branch.outputs.result }};
           gh pr checkout ${{ github.event.issue.number }} && \
-          git merge ${{ steps.get_base_branch.outputs.result }} && git show HEAD
+          git merge --allow-unrelated-histories ${{ steps.get_base_branch.outputs.result }} && git show HEAD
       - run: git show HEAD
       - run: echo "${{ github.ref }}"
       - run: echo "${{ github.sha }}"
