@@ -14,3 +14,5 @@ jobs:
       - name: Dispatch workflow via GitHub CLI
         run: |
           gh workflow run -R ${{ github.event.repository.full_name }} -f repo=${{ github.event.repository.name }} -f owner=${{ github.event.repository.owner.login }} -f issue_number=${{ github.event.issue.number }} testing-queue.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
