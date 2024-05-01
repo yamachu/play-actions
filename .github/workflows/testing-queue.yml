@@ -1,0 +1,35 @@
+name: Testing Queue Runner
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: 'Repository name'
+        required: true
+      owener:
+        description: 'Repository owner'
+        required: true
+      issue_number:
+        description: 'Issue number'
+        required: true
+concurrency:
+  group: queue-merge
+  cancel-in-progress: false
+
+jobs:
+  PreTesting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: yamachu/merge-queue-action/testing@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          required-ci-checks: 'xxxxx'
+  
+  Test:
+    uses: ./.github/workflows/script-worker.yml
+    needs: [PreTesting]
+
+  PostTesting:
+    runs-on: ubuntu-latest
+    needs: [Test]
+    steps:
+      - run: echo "AFTER"
