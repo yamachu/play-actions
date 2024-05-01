@@ -18,11 +18,11 @@ jobs:
     concurrency:
       group: queue-merge
       cancel-in-progress: false
-    # steps:
-    #   - uses: yamachu/merge-queue-action/testing@main
-    #     with:
-    #       github-token: ${{ secrets.GITHUB_TOKEN }}
-    #       required-ci-checks: 'xxxxx'
+    steps:
+      - uses: yamachu/merge-queue-action/testing@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          required-ci-checks: 'xxxxx'
   
   TEST:
     uses: ./.github/workflows/script-worker.yml
