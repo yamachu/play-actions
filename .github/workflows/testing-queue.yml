@@ -21,9 +21,12 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           pr-number: ${{ github.event.inputs.issue_number }}
+          tmp-ci-branch: 'auto.tmp2'
 
   Test:
     uses: ./.github/workflows/script-worker.yml
+    with:
+      checkout-ref: 'auto.tmp2'
     needs: [PreTesting]
 
   PostTesting:

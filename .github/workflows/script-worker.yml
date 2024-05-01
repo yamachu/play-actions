@@ -6,6 +6,11 @@ name: Script Worker
 on:
   workflow_dispatch:
   workflow_call:
+    inputs:
+      checkout-ref:
+        description: 'The ref to checkout'
+        required: false
+        type: string
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -16,6 +21,8 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.checkout-ref || github.head_ref }}
       - uses: actions/github-script@v6
         with:
           script: |
