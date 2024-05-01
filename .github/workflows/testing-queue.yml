@@ -2,12 +2,6 @@ name: Testing Queue Runner
 on:
   workflow_dispatch:
     inputs:
-      repo:
-        description: 'Repository name'
-        required: true
-      owener:
-        description: 'Repository owner'
-        required: true
       issue_number:
         description: 'Issue number'
         required: true
