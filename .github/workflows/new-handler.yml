@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: yamachu/merge-queue-action/precheck@main
+        with:
+          required-codeowners: 'false'
 
   RunJobs:
     runs-on: ubuntu-latest
