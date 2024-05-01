@@ -9,11 +9,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: yamachu/merge-queue-action/precheck@main
+        id: precheck
         with:
           required-codeowners: 'false'
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
+          git pull origin ${{ steps.precheck.outputs.base-branch }}
+          gh pr checkout ${{ github.event.issue.number }}
+          git merge ${{ steps.precheck.outputs.base-branch }}
+
+          git push origin HEAD:auto.${{ github.event.issue.number }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Dispatch workflow via GitHub CLI
         run: |
           # FIXME: 本来は --ref auto.tmp などで行いたいが、auto.tmp への push は後段のジョブで行うため、default branch に紐づいてしまう
-          gh workflow run -R ${{ github.event.repository.full_name }} -f issue_number=${{ github.event.issue.number }} testing-queue.yml
+          gh workflow run -R ${{ github.event.repository.full_name }} -f issue_number=${{ github.event.issue.number }} -f tmp-ci-branch=auto.${{ github.event.issue.number }} --ref auto.${{ github.event.issue.number }} testing-queue.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
