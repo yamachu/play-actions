@@ -16,13 +16,7 @@ jobs:
         with:
           fetch-depth: 0
       - run: |
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-
-          git pull origin ${{ steps.precheck.outputs.base-branch }}
-          gh pr checkout ${{ github.event.issue.number }}
-          git merge ${{ steps.precheck.outputs.base-branch }}
-
+          git log --oneline
           git push origin HEAD:auto.${{ github.event.issue.number }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
