@@ -1,7 +1,7 @@
 name: Assign PR Author
 on:
   pull_request:
-    types: [opened]
+    types: [opened, converted_to_draft, reopened, ready_for_review]
 
 jobs:
   AssignAuthor:
@@ -17,6 +17,11 @@ jobs:
                 pull_number: number
             });
             const author = pull_request.user.login;
+            console.log(`Assigning PR author (${author}) to PR #${number}`);
+            if (author.includes('[bot]') || author.includes('dependabot') || author.includes('dependabot')) {
+                console.log(`PR author is a bot, skipping assignment`);
+                return;
+            }
             await github.rest.issues.addAssignees({
                 owner,
                 repo,
