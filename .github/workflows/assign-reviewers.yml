@@ -13,10 +13,7 @@ jobs:
           script: |
             const { owner, repo, number } = context.issue;
             const commentBody = context.payload.comment.body;
-            const c = github.event.comment.body;
             console.log(commentBody);
-            console.log(c);
-            console.log(commentBody === c);
             const mentionRegex = /\/r\? ((@\w+ ?)+)/;
             const match = commentBody.match(mentionRegex);
             if (!match) {
