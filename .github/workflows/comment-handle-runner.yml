@@ -44,6 +44,7 @@ jobs:
     concurrency:
       group: queue-merge
       cancel-in-progress: false
+      queue: max
     steps:
       - uses: actions/github-script@v7
         name: Is this PR mergeable?
