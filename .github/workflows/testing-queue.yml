@@ -12,6 +12,7 @@ on:
 concurrency:
   group: queue-merge
   cancel-in-progress: false
+  queue: max
 
 jobs:
   PreTesting:
